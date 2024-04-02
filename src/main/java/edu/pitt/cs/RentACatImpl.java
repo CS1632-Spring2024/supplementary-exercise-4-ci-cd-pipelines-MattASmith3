@@ -1,5 +1,7 @@
 package edu.pitt.cs;
 
+import static org.mockito.Mockito.inOrder;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,6 +21,27 @@ public class RentACatImpl implements RentACat {
 
 	public boolean returnCat(int id) {
 		// TODO: Fill in
+
+		String catName = "";
+
+		for(int i = 0; i < cats.size(); i++)
+		{
+			if(cats.get(i).getId() == id)
+			{
+				if(cats.get(i).getRented() == true)
+				{
+					cats.get(i).returnCat();
+					System.out.println("Welcome back, " + cats.get(i).getName()+"!");
+					return true;
+				}
+				else
+				{
+					catName = cats.get(i).getName();
+				}
+			}
+		}
+
+		System.out.println(catName + " is already here!");
 		return false;
 	}
 
@@ -34,6 +57,28 @@ public class RentACatImpl implements RentACat {
 
 	public boolean rentCat(int id) {
 		// TODO: Fill in
+
+		String catName = "";
+
+		for(int i = 0; i < cats.size(); i++)
+		{
+			if(cats.get(i).getId() == id)
+			{
+				if(cats.get(i).getRented() == false)
+				{
+					cats.get(i).rentCat();
+					System.out.println(cats.get(i).getName()+" has been rented.");
+					return true;
+				}
+				else
+				{
+					catName = cats.get(i).getName();
+				}
+
+			}
+		}
+
+		System.out.println("Sorry, "+ catName + " is not here!");
 		return false;
 	}
 
@@ -48,6 +93,15 @@ public class RentACatImpl implements RentACat {
 
 	public boolean renameCat(int id, String name) {
 		// TODO: Fill in
+		for(int i = 0; i < cats.size(); i++)
+		{
+			if(cats.get(i).getId() == id)
+			{
+				cats.get(i).renameCat(name);
+				return true;
+			}
+		}
+		System.out.println("Invalid cat ID.");
 		return false;
 	}
 
@@ -63,7 +117,17 @@ public class RentACatImpl implements RentACat {
 
 	public String listCats() {
 		// TODO: Fill in
-		return "WRITE CODE FOR THIS";
+		String catString = "";
+
+		for(int i = 0; i < cats.size(); i++)
+		{
+			if(cats.get(i).getRented() == false)
+			{
+				catString = catString + cats.get(i).toString() + "\n";
+			}
+		}
+		
+		return catString;
 	}
 
 	/**
@@ -78,6 +142,7 @@ public class RentACatImpl implements RentACat {
 
 		// null check
 		if (cats == null) {
+			//System.out.println("Invalid cat ID.");
 			return null;
 		}
 
